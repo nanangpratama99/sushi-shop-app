@@ -21,7 +21,28 @@ class FoodList extends StatelessWidget {
             food.imagePath,
             width: 60,
           ),
-          Column(children: [],)
+          const SizedBox(width: 20),
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                food.name,
+                style: const TextStyle(
+                  fontSize: 20,
+                ),
+              ),
+              const SizedBox(height: 5),
+              Row(
+                children: [Text(food.price), Text(food.rating)],
+              )
+            ],
+          ),
+          const Spacer(),
+          Icon(
+            Icons.bookmark_border_rounded,
+            color: Colors.grey.shade500,
+            size: 30,
+          )
         ],
       ),
     );
