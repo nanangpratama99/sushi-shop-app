@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 
-import '../../../models/food_model.dart';
+import '../../../../models/sushi_food_model.dart';
 
-class FoodList extends StatelessWidget {
-  final Food food;
-  const FoodList({super.key, required this.food});
+class SushiList extends StatelessWidget {
+  final Sushi sushi;
+  const SushiList({super.key, required this.sushi});
 
   @override
   Widget build(BuildContext context) {
@@ -18,7 +18,7 @@ class FoodList extends StatelessWidget {
       child: Row(
         children: [
           Image.asset(
-            food.imagePath,
+            sushi.imagePath,
             width: 60,
           ),
           const SizedBox(width: 20),
@@ -26,14 +26,14 @@ class FoodList extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                food.name,
+                sushi.name,
                 style: const TextStyle(
                   fontSize: 20,
                 ),
               ),
               const SizedBox(height: 5),
               Row(
-                children: [Text(food.price), Text(food.rating)],
+                children: [Text(sushi.price), Text(sushi.rating)],
               )
             ],
           ),

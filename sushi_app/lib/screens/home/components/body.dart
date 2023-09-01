@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:sushi_app/models/food_model.dart';
-import 'package:sushi_app/screens/home/components/food_tile.dart';
-import 'package:sushi_app/screens/home/components/foot_list.dart';
+import 'package:sushi_app/models/sashimi_food_model.dart';
+import 'package:sushi_app/models/sushi_food_model.dart';
+import 'package:sushi_app/screens/home/components/chip_menu.dart';
 import 'package:sushi_app/screens/home/components/promo_banner.dart';
 
+import '../../../models/chip_menu_model.dart';
 import '../../../widgets/search_input.dart';
+import 'sushi/sushi_list.dart';
+import 'sushi/sushi_tile.dart';
 
 class Body extends StatefulWidget {
   const Body({super.key});
@@ -14,47 +17,42 @@ class Body extends StatefulWidget {
 }
 
 class _BodyState extends State<Body> {
-  List foodMenu = [
-    Food(
-      name: 'Sushi',
-      imagePath: 'assets/images/sushi.png',
-      rating: '4.3',
-      price: '44.00',
-    ),
-    Food(
-      name: 'Sushi',
-      imagePath: 'assets/images/sushi-1.png',
-      rating: '4.3',
-      price: '22.00',
-    ),
-    Food(
-      name: 'Sushi',
-      imagePath: 'assets/images/sushi-2.png',
-      rating: '4.3',
-      price: '11.00',
-    ),
-    Food(
-      name: 'Sushi',
-      imagePath: 'assets/images/sushi-3.png',
-      rating: '4.3',
-      price: '55.00',
-    ),
-  ];
+  int selectedIndex = 0;
 
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
       child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          // promo banner
+          // <-------------- Promo Banner -------------->
           const PromoBanner(),
-          const SizedBox(height: 25),
-          // search
+          const SizedBox(height: 10),
+          // <-------------- Search Input -------------->
           const SearchInput(),
+          // <-------------- Chip Menu -------------->
+          const SizedBox(height: 10),
+
+          SizedBox(
+            height: 50,
+            child: ListView.builder(
+              scrollDirection: Axis.horizontal,
+              itemCount: chipMenuItem.length,
+              itemBuilder: (context, index) {
+                return ChipMenu(
+                  chipMenuData: chipMenuItem[index],
+                  index: index, // Pass the current index to the ChipMenu widget
+                );
+              },
+            ),
+          ),
+
+          const SizedBox(height: 20),
+
           const Padding(
             padding: EdgeInsets.only(left: 20.0),
             child: Text(
-              "Food Menu",
+              "Sashimi",
               style: TextStyle(
                 color: Colors.black87,
                 fontSize: 20,
@@ -64,24 +62,25 @@ class _BodyState extends State<Body> {
           ),
 
           const SizedBox(height: 20),
-          // <-------------- menu list -------------->
+          // <-------------- Slide Menu Sushi -------------->
           SizedBox(
             height: 230,
             child: ListView.builder(
               scrollDirection: Axis.horizontal,
-              itemCount: foodMenu.length,
+              itemCount: SushiMenu.length,
               itemBuilder: (context, index) {
-                return FoodTile(
-                  food: foodMenu[index],
+                return SushiTile(
+                  sushi: SushiMenu[index],
                 );
               },
             ),
           ),
+
           const SizedBox(height: 25),
           const Padding(
             padding: EdgeInsets.only(left: 20.0),
             child: Text(
-              "Food Menu",
+              "Sushi Menu",
               style: TextStyle(
                 color: Colors.black87,
                 fontSize: 20,
@@ -90,19 +89,18 @@ class _BodyState extends State<Body> {
             ),
           ),
 
+          // <-------------- List Menu Sushi -------------->
           ListView.builder(
             shrinkWrap: true,
             physics: const NeverScrollableScrollPhysics(),
             scrollDirection: Axis.vertical,
-            itemCount: foodMenu.length,
+            itemCount: SushiMenu.length,
             itemBuilder: (context, index) {
-              return FoodList(
-                food: foodMenu[index],
+              return SushiList(
+                sushi: SushiMenu[index],
               );
             },
           ),
-
-          // popular food
         ],
       ),
     );
