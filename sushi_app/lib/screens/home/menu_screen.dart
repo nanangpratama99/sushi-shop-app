@@ -3,6 +3,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:sushi_app/constant/colors.dart';
 
 import 'components/body.dart';
+import 'components/chip_menu.dart';
 
 class MenuScreen extends StatelessWidget {
   MenuScreen({super.key});
@@ -120,19 +121,46 @@ class BuildDrawer extends StatelessWidget {
             ),
 
             // list menu
-
-            const BuildListMenu(
+            BuildListMenu(
+              selectedIndex: 0,
               title: "Home",
-              icon: Icon(Icons.home),
+              icon: const Icon(
+                Icons.home,
+                size: 40,
+              ),
             ),
-            const BuildListMenu(
+            BuildListMenu(
+              selectedIndex: 1,
               title: "Cart",
-              icon: Icon(Icons.shopping_bag),
+              icon: const Icon(
+                Icons.shopping_bag,
+                size: 40,
+              ),
             ),
-            const BuildListMenu(
+            BuildListMenu(
+              selectedIndex: 2,
               title: "Pay",
-              icon: Icon(Icons.payment),
+              icon: const Icon(Icons.payment, size: 40),
             ),
+            const Spacer(),
+            Row(
+              children: [
+                IconButton(
+                  onPressed: () {},
+                  icon: const Icon(
+                    Icons.logout_rounded,
+                    color: Colors.white,
+                    size: 40,
+                  ),
+                ),
+                const SizedBox(width: 30),
+                const Text(
+                  "Log Out",
+                  style: TextStyle(color: Colors.white, fontSize: 20),
+                )
+              ],
+            ),
+            const SizedBox(height: 20),
           ],
         ),
       ),
@@ -140,28 +168,48 @@ class BuildDrawer extends StatelessWidget {
   }
 }
 
-class BuildListMenu extends StatelessWidget {
+class BuildListMenu extends StatefulWidget {
+  int selectedIndex = 0;
   final String title;
   final Icon icon;
-  const BuildListMenu({
+  BuildListMenu({
     super.key,
     required this.title,
     required this.icon,
+    required this.selectedIndex,
   });
 
   @override
+  State<BuildListMenu> createState() => _BuildListMenuState();
+}
+
+class _BuildListMenuState extends State<BuildListMenu> {
+  late int index;
+  @override
   Widget build(BuildContext context) {
-    return ListTile(
-      leading: icon,
-      iconColor: Colors.white,
-      title: Text(
-        title,
-        style: const TextStyle(color: Colors.white, fontSize: 17),
-      ),
-      trailing: const Icon(
-        Icons.arrow_forward_ios_rounded,
-        color: Colors.white,
-        size: 15,
+    return Padding(
+      padding: const EdgeInsets.only(right: 20),
+      child: ListTile(
+        selectedColor: Colors.amber,
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
+        onTap: () {
+          print(widget.selectedIndex);
+          setState(() {
+            index = selectedIndex;
+          });
+        },
+        contentPadding: const EdgeInsets.all(5),
+        leading: widget.icon,
+        iconColor: Colors.white,
+        title: Text(
+          widget.title,
+          style: const TextStyle(color: Colors.white, fontSize: 17),
+        ),
+        trailing: const Icon(
+          Icons.arrow_forward_ios_rounded,
+          color: Colors.white,
+          size: 15,
+        ),
       ),
     );
   }
